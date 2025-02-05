@@ -21,7 +21,7 @@ public class ParticipantE2ETest {
     @Test
     public void testCreateParticipant() {
         // Exemple d'une requête POST pour créer un nouveau participant
-        /*String jsonBody = "{ \"nom\": \"Dupont\", \"prenom\": \"Jean\" }";  // Corps de la requête (JSON)
+        String jsonBody = "{ \"nom\": \"Dupont\", \"prenom\": \"Jean\" }";  // Corps de la requête (JSON)
 
         given()
                 .contentType("application/json")
@@ -31,6 +31,6 @@ public class ParticipantE2ETest {
                 .then()
                 .statusCode(201)  // Vérifie que le statut de la réponse est 201 (création réussie)
                 .body("nom", equalTo("Dupont"))
-                .body("prenom", equalTo("Jean"));*/
+                .body("prenom", equalTo("Jean"));
     }
 }
