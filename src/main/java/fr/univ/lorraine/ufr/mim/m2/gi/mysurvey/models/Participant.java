@@ -46,7 +46,7 @@ public class Participant {
     }
 
     public String getNom() {
-        return "";
+        return nom;
     }
 
     public void setNom(String nom) {
