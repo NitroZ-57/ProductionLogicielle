@@ -14,7 +14,7 @@ public class ParticipantE2ETest {
     @BeforeAll
     public static void setup() {
         // Configurez l'URL de base pour l'application que vous testez
-        RestAssured.baseURI = "http://localhost:8080"; // URL de votre application
+        RestAssured.baseURI = "https://productionlogicielle.onrender.com/api"; // URL de votre application
     }
 
 
@@ -27,7 +27,7 @@ public class ParticipantE2ETest {
                 .contentType("application/json")
                 .body(jsonBody)
                 .when()
-                .post("/participants")  // Endpoint de création
+                .post("/participant/")  // Endpoint de création
                 .then()
                 .statusCode(201)  // Vérifie que le statut de la réponse est 201 (création réussie)
                 .body("nom", equalTo("Dupont"))
