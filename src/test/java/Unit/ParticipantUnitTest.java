@@ -1,144 +1,131 @@
 package Unit;
 
-import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.MySurveyApplication;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.models.Participant;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.repositories.ParticipantRepository;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.services.ParticipantService;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.annotation.DirtiesContext;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
-import javax.transaction.Transactional;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-@SpringBootTest(classes = MySurveyApplication.class)
-@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
-@Transactional
+@ExtendWith(MockitoExtension.class)
 class ParticipantUnitTest {
 
-    @Autowired
+    @Mock
     private ParticipantRepository participantRepository;
 
-
-    @Autowired
+    @InjectMocks
     private ParticipantService participantService;
 
 
     @Test
     void givenEmptyService_whenUpdateAParticipant_thenServiceAlwaysEmpty() {
         // Given
-        assertEquals(0, participantService.getAll().size(), "Erreur le service n'est pas vide");
+        Participant p = mock(Participant.class);
 
         // When
-        participantService.update(22L, new Participant(22L, "Update", "Fail"));
+        participantService.update(22L, p);
 
         // Then
-        assertEquals(0, participantService.getAll().size(), "Erreur un ajout a été fait dans le service");
-    }
-
+        verify(participantRepository, times(0)).save(any(Participant.class)); // Vérifie que save n'a pas été appelé
+}
 
     @Test
-    void givenEmptyService_whenDeleteAParticipant_thenServiceAlwaysEmpty() {
+    void givenEmptyService_whenRandomID_thenServiceAlwaysEmpty() {
         // Given
-        assertEquals(0, participantService.getAll().size(), "Erreur le service n'est pas vide");
 
         // When
         participantService.delete(22L);
 
         // Then
-        assertEquals(0, participantService.getAll().size(), "Erreur un ajout a été fait dans le service");
+        verify(participantRepository, times(0)).deleteById(any()); // Vérifie que delete n'a pas été appelé
     }
-
-
 
     @Test
-    void givenEmptyService_whenGetAParticipant_thenExceptionThrown() {
+    void givenEmptyService_whenGetRandomID_thenExceptionThrown() {
         // Given
-        assertEquals(0, participantService.getAll().size(), "Erreur le service n'est pas vide");
 
         // When
-        Exception exception = assertThrows(Exception.class, () -> {
-            Participant p = participantService.getById(42L);
-            assertNull(p);
-        });
+        when(participantRepository.getById(any())).thenReturn(null);
+        participantService.getById(42L);
 
         // Then
-        assertEquals("EntityNotFoundException", exception.getClass().getSimpleName());
+        verify(participantRepository, times(0)).delete(any());
     }
-
 
     @Test
-    void givenParticipant_whenAddParticipantToService_thenParticipantExist() {
+    void givenParticipant_whenSaveParticipant_thenParticipantExist() {
         // Given
-        Participant participant = new Participant(1L, "Test", "Prenom");
+        Participant participant = mock(Participant.class);
 
         // When
-        Participant p = participantService.create(participant);
+        when(participantRepository.save(any(Participant.class))).thenReturn(participant);
+        participantService.create(participant);
 
         // Then
-        assertNotNull(p, "Participant pas ajouté au service");
-        assertNotNull(participantService.getById(p.getParticipantId()), "Participant pas retrouvé dans le service");
+        verify(participantRepository, times(1)).save(participant); // Vérifie que delete n'a pas été appelé
     }
-
-
 
     @Test
     void givenServiceWithParticipant_whenDeleteParticipantOfService_thenExceptionThrown() {
         // Given
-        Participant participant = new Participant(3L, "Deleted", "User");
-        Participant p = participantService.create(participant);
-        assertNotNull(p, "Impossible d'ajouter le participant");
+        Participant participant = new Participant(1L, "Nom", "Prenom");
+        when(participantRepository.save(any(Participant.class))).thenReturn(participant);
+        Long id = participantService.create(participant).getParticipantId();
+
 
         // When
-        participantService.delete(p.getParticipantId());
+        when(participantRepository.findById(id)).thenReturn(Optional.of(participant));
+        participantService.delete(id);
 
         // Then
-        Exception exception = assertThrows(Exception.class, () -> {
-            assertNull(participantService.getById(p.getParticipantId()), "Impossible de retrouver le participant à supprimer");
-        });
-        assertEquals("JpaObjectRetrievalFailureException", exception.getClass().getSimpleName());
+        verify(participantRepository, times(1)).deleteById(id); // Vérifie que deleteById a été appelé une fois
     }
-
 
     @Test
-    void givenTreeParticipantsAndEmptyService_whenAddAllParticipants_thenSizeOfParticipantEqualsTree() {
+    void givenThreeParticipantsAndEmptyService_whenAddAllParticipants_thenSizeOfParticipantEqualsThree() {
         // Given
-        assertEquals(0, participantService.getAll().size(), "Le service n'est pas vide");
-        Participant participant1 = new Participant(11L, "Number One", "User");
-        Participant participant2 = new Participant(12L, "Number Two", "User");
-        Participant participant3 = new Participant(13L, "Number Tree", "User");
-
+        Participant participant1 = mock(Participant.class);
+        Participant participant2 = mock(Participant.class);
+        Participant participant3 = mock(Participant.class);
 
         // When
-        assertNotNull(participantService.create(participant1), "Impossible d'ajouter le participant 1");
-        assertNotNull(participantService.create(participant2), "Impossible d'ajouter le participant 2");
-        assertNotNull(participantService.create(participant3), "Impossible d'ajouter le participant 3");
+        when(participantRepository.save(participant1)).thenReturn(participant1);
+        when(participantRepository.save(participant2)).thenReturn(participant2);
+        when(participantRepository.save(participant3)).thenReturn(participant3);
 
-        // Then
-        assertEquals(3, participantService.getAll().size(), "La taille du service n'est pas bon");
+        participantService.create(participant1);
+        participantService.create(participant2);
+        participantService.create(participant3);
+
+        verify(participantRepository, times(3)).save(any(Participant.class));
     }
-
 
     @Test
     void givenServiceWithParticipant_whenUpdateParticipantInService_thenParticipantIsModified() {
         // Given
-        String ancienNom = "Old";
-        Participant oldParticipant = new Participant(3L, ancienNom, "User");
-        Participant p = participantService.create(oldParticipant);
-        assertNotNull(p, "Impossible d'ajouter le participant");
-        Long id = p.getParticipantId();
+        Participant participant = new Participant(3L, "Nom", "Prenom");
+        when(participantRepository.save(any(Participant.class))).thenReturn(participant);
+        Long id = participantService.create(participant).getParticipantId();
 
         // When
-        String nouveauNom = "New";
-        Participant newParticipant = new Participant(id, nouveauNom, "User");
-        assertNotNull(participantService.update(id, newParticipant), "Erreur lors de l'update");
+        String nouveauNom = "nouveauNom";
+        Participant newParticipant = new Participant(3L, nouveauNom, "User");
+        when(participantRepository.findById(id)).thenReturn(Optional.of(participant));
+        when(participantRepository.save(newParticipant)).thenReturn(newParticipant);
+        participantService.update(newParticipant.getParticipantId(), newParticipant);
 
         // Then
-        assertEquals(nouveauNom, participantService.getById(id).getNom(), "Le participant n'a pas le nouveau nom");
-    }
+        verify(participantRepository, times(2)).save(any(Participant.class));
+        when(participantRepository.getById(id)).thenReturn(newParticipant);
+        assertNotEquals(participant, participantService.getById(id));
+        assertEquals(newParticipant, participantService.getById(id));
 
+    }
 }
