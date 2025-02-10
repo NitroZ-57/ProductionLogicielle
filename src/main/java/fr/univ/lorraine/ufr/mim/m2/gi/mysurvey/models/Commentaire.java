@@ -1,5 +1,9 @@
 package fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.models;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import javax.persistence.*;
 
 /**
@@ -7,6 +11,9 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "commentaire")
+@Getter
+@Setter
+@NoArgsConstructor
 public class Commentaire {
 
     @Id
@@ -25,37 +32,4 @@ public class Commentaire {
     @JoinColumn(name = "participant_id")
     private Participant participant = new Participant();
 
-    public Commentaire() {}
-
-    public Long getCommentaireId() {
-        return commentaireId;
-    }
-
-    public void setCommentaireId(Long commentaireId) {
-        this.commentaireId = commentaireId;
-    }
-
-    public String getCommentaire() {
-        return commentaire;
-    }
-
-    public void setCommentaire(String commentaire) {
-        this.commentaire = commentaire;
-    }
-
-    public Sondage getSondage() {
-        return sondage;
-    }
-
-    public void setSondage(Sondage sondage) {
-        this.sondage = sondage;
-    }
-
-    public Participant getParticipant() {
-        return participant;
-    }
-
-    public void setParticipant(Participant participant) {
-        this.participant = participant;
-    }
 }
