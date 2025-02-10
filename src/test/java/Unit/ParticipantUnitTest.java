@@ -66,16 +66,17 @@ class ParticipantUnitTest {
 
         // When
         when(participantRepository.save(any(Participant.class))).thenReturn(participant);
-        participantService.create(participant);
+        Participant created = participantService.create(participant);
 
         // Then
         verify(participantRepository, times(1)).save(participant); // Vérifie que delete n'a pas été appelé
+        assertEquals(participant, created);
     }
 
     @Test
     void givenServiceWithParticipant_whenDeleteParticipantOfService_thenExceptionThrown() {
         // Given
-        Participant participant = new Participant(1L, "Nom", "Prenom");
+        Participant participant = mock(Participant.class);
         when(participantRepository.save(any(Participant.class))).thenReturn(participant);
         Long id = participantService.create(participant).getParticipantId();
 
@@ -86,6 +87,7 @@ class ParticipantUnitTest {
 
         // Then
         verify(participantRepository, times(1)).deleteById(id); // Vérifie que deleteById a été appelé une fois
+        assertEquals(0, participantService.getAll().size());
     }
 
     @Test
