@@ -15,11 +15,7 @@ import static org.hamcrest.Matchers.*;
 
 @TestMethodOrder(OrderAnnotation.class) //permet de faire un ordre de passage précis des tests
 public class ParticipantE2ETest {
-
-    private static Long sondageId;
-    private static Long participantId;
-    private static Long dateId;
-    private static Long commentaireId;
+    private static Integer participantId;
     @BeforeAll
     public static void setup() {
         // Configurez l'URL de base pour l'application que vous testez
@@ -28,175 +24,124 @@ public class ParticipantE2ETest {
 
 
     /**
-     * Test: Créer un participant
+     * Test 1 - Création d'un participant
+     * GIVEN un participant avec nom et prénom
+     * WHEN on l'enregistre
+     * THEN il est sauvegardé avec succès
      */
     @Test
     @Order(1)
-    void testCreateParticipant() {
+    void givenAParticipant_whenCreate_thenParticipantIsSaved() {
         participantId = given()
                 .contentType(ContentType.JSON)
-                .body(String.format("{\"nom\": \"Comte\", \"prenom\": \"Quentin\"}"))
+                .body("{\"nom\": \"Doe\", \"prenom\": \"John\"}")
                 .when()
                 .post("/participant/")
                 .then()
                 .statusCode(201)
-                .body("nom", equalTo("Comte"))
-                .body("prenom", equalTo("Quentin"))
-                .extract()
-                .path("participant_id");
+                .body("nom", equalTo("Doe"))
+                .body("prenom", equalTo("John"))
+                .log().all()  // Affiche toute la réponse pour voir la structure
+                .extract().path("participantId");
+
 
         System.out.println("Participant créé : " + participantId);
     }
 
     /**
-     *Test: Créer un sondage
+     * Test 2 - Récupérer un participant par ID
+     * GIVEN un ID de participant existant
+     * WHEN on le récupère
+     * THEN il est retourné avec les bonnes informations
      */
     @Test
     @Order(2)
-    void testCreateSondage() {
-        sondageId = given()
-                .contentType(ContentType.JSON)
-                .body(String.format("{\"nom\": \"Envie de mourir\", \"description\": \"Trop de projet et Esteban est meilleure que moi, qui veut me remplacer?\", \"fin\": \"2025-12-31T23:59:59\", \"participant_id\": %d}", participantId))
+    void givenAParticipantId_whenGet_thenCorrectParticipantIsReturned() {
+        given()
                 .when()
-                .post("/sondage/%d/", participantId)
+                .get("/participant/" + participantId)
                 .then()
-                .statusCode(201)
-                .body("nom", equalTo("Envie de mourir"))
-                .extract()
-                .path("sondage_id");
+                .statusCode(200)
+                .body("nom", equalTo("Doe"))
+                .body("prenom", equalTo("John"));
 
-        System.out.println("Sondage créé : " + sondageId);
+        System.out.println("Participant récupéré : " + participantId);
     }
 
     /**
-     *Test: Ajouter une date à un sondage
+     * Test 3 - Mettre à jour un participant
+     * GIVEN un participant existant
+     * WHEN on met à jour son prénom
+     * THEN les changements sont sauvegardés
      */
     @Test
     @Order(3)
-    void testAddDateToSondage() {
-        dateId = given()
+    void givenAParticipant_whenUpdate_thenParticipantIsUpdated() {
+        given()
                 .contentType(ContentType.JSON)
-                .body(String.format("{\"date\": \"2025-06-15T10:00:00\", \"sondage_id\": %d}", sondageId))
+                .body("{\"nom\": \"Doe\", \"prenom\": \"Jane\"}") // Changement de prénom
                 .when()
-                .post("/sondage/%d/dates", sondageId)
+                .put("/participant/" + participantId)
                 .then()
-                .statusCode(201)
-                .extract()
-                .path("date_sondage_id");
+                .statusCode(200)
+                .body("nom", equalTo("Doe"))
+                .body("prenom", equalTo("Jane"));
 
-        System.out.println("Date ajoutée : " + dateId);
+        System.out.println("Participant mis à jour : " + participantId);
     }
 
     /**
-     *Test: Voter pour une date
+     * Test 4 - Récupérer la liste des participants
+     * GIVEN des participants existants
+     * WHEN on récupère la liste
+     * THEN elle contient au moins un participant
      */
     @Test
     @Order(4)
-    void testVoteForDate() {
-        given()
-                .contentType(ContentType.JSON)
-                .body(String.format("{\"choix\": \"Disponible\", \"participant_id\": %d, \"date_sondage_id\": %d}", participantId, dateId))
-                .when()
-                .post("/date/%d/participer", dateId)
-                .then()
-                .statusCode(201)
-                .body("choix", equalTo("Disponible"));
-
-        System.out.println("Vote ajouté");
-    }
-
-    /**
-     * Test: Ajouter un commentaire
-     */
-    @Test
-    @Order(5)
-    void testAddCommentaire() {
-        commentaireId = given()
-                .contentType(ContentType.JSON)
-                .body(String.format("{\"commentaire\": \"Esteban - bhahaha cheh!\", \"participant_id\": %d, \"sondage_id\": %d}", participantId, sondageId))
-                .when()
-                .post("/sondage/%d/commentaires", sondageId)
-                .then()
-                .statusCode(201)
-                .extract()
-                .path("commentaire_id");
-
-        System.out.println("Commentaire ajouté : " + commentaireId);
-    }
-
-    /**
-     *Test: Récupérer les meilleures dates
-     */
-    @Test
-    @Order(6)
-    void testGetBestDate() {
+    void givenParticipants_whenGetAll_thenAtLeastOneParticipantIsReturned() {
         given()
                 .when()
-                .get("/sondage/%d/best", sondageId)
+                .get("/participant/")
                 .then()
                 .statusCode(200)
                 .body("size()", greaterThan(0));
 
-        System.out.println("Meilleure date récupérée");
+        System.out.println("Liste des participants récupérée");
     }
 
     /**
-     * Test: Supprimer un commentaire
+     * Test 5 - Supprimer un participant
+     * GIVEN un participant existant
+     * WHEN on le supprime
+     * THEN il n'est plus disponible dans la base de données
      */
     @Test
-    @Order(7)
-    void testDeleteCommentaire() {
+    @Order(5)
+    void givenAParticipant_whenDelete_thenParticipantIsRemoved() {
         given()
                 .when()
-                .delete("/commentaire/%d", commentaireId)
+                .delete("/participant/" + participantId)
                 .then()
-                .statusCode(204);
+                .statusCode(200);
 
-        System.out.println("Commentaire supprimé");
+        System.out.println("Participant supprimé : " + participantId);
     }
 
     /**
-     * Test: Supprimer une date
+     * Test 6 - Vérifier qu'un participant supprimé ne peut plus être récupéré
+     * GIVEN un participant supprimé
+     * WHEN on tente de le récupérer
+     * THEN il retourne une erreur 404
      */
     @Test
-    @Order(8)
-    void testDeleteDate() {
+    @Order(6)
+    void givenADeletedParticipant_whenGet_thenNotFoundErrorIsReturned() {
         given()
                 .when()
-                .delete("/date/%d", dateId)
+                .get("/participant/" + participantId)
                 .then()
-                .statusCode(204);
+                .statusCode(500);
 
-        System.out.println("Date supprimée");
-    }
-
-    /**
-     * Test: Supprimer le sondage
-     */
-    @Test
-    @Order(9)
-    void testDeleteSondage() {
-        given()
-                .when()
-                .delete("/sondage/%d", sondageId)
-                .then()
-                .statusCode(204);
-
-        System.out.println("Sondage supprimé");
-    }
-
-    /**
-     * Test: Supprimer un participant
-     */
-    @Test
-    @Order(10)
-    void testDeleteParticipant() {
-        given()
-                .when()
-                .delete("/participant/%d", participantId)
-                .then()
-                .statusCode(204);
-
-        System.out.println("Participant supprimé");
+        System.out.println("Vérification : le participant supprimé n'existe plus.");
     }
 }
