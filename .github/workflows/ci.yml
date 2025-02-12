@@ -1,11 +1,11 @@
-name: Java Unit Tests
+name: CI Pipeline
 
 on: [push, pull_request]
 
 jobs:
-  test:
+  build:
+    name: Build
     runs-on: windows-latest
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -16,6 +16,23 @@ jobs:
           java-version: '11'
           distribution: 'temurin'
 
-      - name: Install dependencies and run unit tests
+      - name: Build project
+        run: mvn clean compile
+
+  test:
+    name: Test
+    runs-on: windows-latest
+    needs: build  # Exécute le job Test après Build
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up JDK 11
+        uses: actions/setup-java@v3
+        with:
+          java-version: '11'
+          distribution: 'temurin'
+
+      - name: Run tests
         #run: mvn clean test -Dtest=**/Intergration/**/*
         run: mvn clean test

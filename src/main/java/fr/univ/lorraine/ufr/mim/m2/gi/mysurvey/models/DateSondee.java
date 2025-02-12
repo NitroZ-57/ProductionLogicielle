@@ -1,9 +1,16 @@
 package fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.models;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import javax.persistence.*;
 
 @Entity
 @Table(name = "date_sondee", uniqueConstraints = {@UniqueConstraint(columnNames = {"date_sondage_id", "participant_id"})})
+@Getter
+@Setter
+@NoArgsConstructor
 public class DateSondee {
 
     @Id
@@ -22,44 +29,11 @@ public class DateSondee {
     @Enumerated(EnumType.STRING)
     private Choix choix;
 
-    public DateSondee() {}
 
     public DateSondee(Long dateSondeeId, DateSondage dateSondage, Participant participant, Choix choix) {
         this.dateSondeeId = dateSondeeId;
         this.dateSondage = dateSondage;
         this.participant = participant;
         this.choix = choix;
-    }
-
-    public Long getDateSondeeId() {
-        return dateSondeeId;
-    }
-
-    public void setDateSondeeId(Long dateSondeeId) {
-        this.dateSondeeId = dateSondeeId;
-    }
-
-    public DateSondage getDateSondage() {
-        return dateSondage;
-    }
-
-    public void setDateSondage(DateSondage dateSondage) {
-        this.dateSondage = dateSondage;
-    }
-
-    public Participant getParticipant() {
-        return participant;
-    }
-
-    public void setParticipant(Participant participant) {
-        this.participant = participant;
-    }
-
-    public String getChoix() {
-        return choix.name();
-    }
-
-    public void setChoix(String choix) {
-        this.choix = Choix.valueOf(choix);
     }
 }

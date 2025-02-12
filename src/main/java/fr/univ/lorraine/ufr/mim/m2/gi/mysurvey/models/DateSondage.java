@@ -1,5 +1,9 @@
 package fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.models;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Date;
@@ -10,6 +14,9 @@ import java.util.List;
  */
 @Entity
 @Table(name = "date_sondage", uniqueConstraints = {@UniqueConstraint(columnNames = {"date", "sondage_id"})})
+@Getter
+@Setter
+@NoArgsConstructor
 public class DateSondage {
 
     @Id
@@ -27,8 +34,6 @@ public class DateSondage {
     @OneToMany(mappedBy = "dateSondage", cascade = CascadeType.ALL)
     private List<DateSondee> dateSondee = new ArrayList<>();
 
-    public DateSondage() {}
-
     public DateSondage(Long dateSondageId, Date date, Sondage sondage, List<DateSondee> dateSondee) {
         this.dateSondageId = dateSondageId;
         this.date = date;
@@ -36,35 +41,4 @@ public class DateSondage {
         this.dateSondee = dateSondee;
     }
 
-    public Long getDateSondageId() {
-        return dateSondageId;
-    }
-
-    public void setDateSondageId(Long dateSondageId) {
-        this.dateSondageId = dateSondageId;
-    }
-
-    public Date getDate() {
-        return date;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
-    }
-
-    public Sondage getSondage() {
-        return sondage;
-    }
-
-    public void setSondage(Sondage sondage) {
-        this.sondage = sondage;
-    }
-
-    public List<DateSondee> getDateSondee() {
-        return dateSondee;
-    }
-
-    public void setDateSondee(List<DateSondee> dateSondee) {
-        this.dateSondee = dateSondee;
-    }
 }
