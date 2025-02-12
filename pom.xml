@@ -106,7 +106,7 @@
 	    <artifactId>pitest-maven</artifactId>
 	    <version>1.5.2</version>
 	    <dependencies>
-	        <dependency>	
+	        <dependency>
 		    <groupId>org.pitest</groupId>
 		    <artifactId>pitest-junit5-plugin</artifactId>
 		    <version>0.12</version>
@@ -142,6 +142,7 @@
 	    <generateHtml >true</generateHtml >
 	    <excludes >
 	        <exclude>**/M2giApplication.java </exclude>
+            <exclude>**/MySurveyApplication.java </exclude>
 	    </excludes >
 	</configuration >
 	</plugin>
