@@ -1,5 +1,6 @@
 package fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.models;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -17,6 +18,7 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 public class Sondage {
 
     @Id
@@ -46,15 +48,5 @@ public class Sondage {
     @JoinColumn(name = "participant_id")
     private Participant createBy = new Participant();
 
-    public Sondage(Long sondageId, String nom, String description, Date fin, Boolean cloture, List<Commentaire> commentaires, List<DateSondage> dateSondage, Participant createBy) {
-        this.sondageId = sondageId;
-        this.nom = nom;
-        this.description = description;
-        this.fin = fin;
-        this.cloture = cloture;
-        this.commentaires = commentaires;
-        this.dateSondage = dateSondage;
-        this.createBy = createBy;
-    }
 
 }

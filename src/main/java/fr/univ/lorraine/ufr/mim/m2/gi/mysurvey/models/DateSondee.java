@@ -1,5 +1,6 @@
 package fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.models;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -11,6 +12,7 @@ import javax.persistence.*;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 public class DateSondee {
 
     @Id
@@ -29,11 +31,4 @@ public class DateSondee {
     @Enumerated(EnumType.STRING)
     private Choix choix;
 
-
-    public DateSondee(Long dateSondeeId, DateSondage dateSondage, Participant participant, Choix choix) {
-        this.dateSondeeId = dateSondeeId;
-        this.dateSondage = dateSondage;
-        this.participant = participant;
-        this.choix = choix;
-    }
 }
