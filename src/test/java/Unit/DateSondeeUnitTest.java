@@ -76,6 +76,28 @@ class DateSondeeUnitTest {
     }
 
 
+    @Test
+    void given_whenGetBestDate_thenRepositoryCalled() {
+        // Given
+
+        // When
+        dateSondeeService.bestDate(1L);
+
+        // Then
+        verify(dateSondeeRepository, times(1)).bestDate(any(Long.class));
+    }
+
+
+    @Test
+    void given_whenGetMaybeBestDate_thenRepositoryCalled() {
+        // Given
+
+        // When
+        dateSondeeService.maybeBestDate(1L);
+
+        // Then
+        verify(dateSondeeRepository, times(1)).maybeBestDate(any(Long.class));
+    }
 
 
 }
