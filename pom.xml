@@ -95,6 +95,18 @@
 <build>
     <plugins>
         <plugin>
+            <groupId>org.pitest</groupId>
+	    <artifactId>pitest-maven</artifactId>
+	    <version>1.5.2</version>
+	    <dependencies>
+	        <dependency>	
+		    <groupId>org.pitest</groupId>
+		    <artifactId>pitest-junit5-plugin</artifactId>
+		    <version>0.12</version>
+                </dependency>
+            </dependencies>
+        </plugin>
+        <plugin>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-maven-plugin</artifactId>
         </plugin>
@@ -110,6 +122,22 @@
                 </archive>
             </configuration>
         </plugin>
+	<plugin>
+	    <groupId>org.springframework.boot </groupId>
+	    <artifactId >spring-boot-maven-plugin </artifactId >
+	</plugin>
+	<plugin>
+	    <groupId>org.openclover </groupId>
+	    <artifactId >clover-maven-plugin </artifactId >
+	    <version>4.4.1</version>
+	    <configuration >
+	    <targetPercentage >98.00000000% </targetPercentage >
+	    <generateHtml >true</generateHtml >
+	    <excludes >
+	        <exclude>**/M2giApplication.java </exclude>
+	    </excludes >
+	</configuration >
+	</plugin>
     </plugins>
 </build>
 
