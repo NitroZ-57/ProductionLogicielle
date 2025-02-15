@@ -1,5 +1,6 @@
 package fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.models;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -17,6 +18,7 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 public class DateSondage {
 
     @Id
@@ -33,12 +35,5 @@ public class DateSondage {
 
     @OneToMany(mappedBy = "dateSondage", cascade = CascadeType.ALL)
     private List<DateSondee> dateSondee = new ArrayList<>();
-
-    public DateSondage(Long dateSondageId, Date date, Sondage sondage, List<DateSondee> dateSondee) {
-        this.dateSondageId = dateSondageId;
-        this.date = date;
-        this.sondage = sondage;
-        this.dateSondee = dateSondee;
-    }
 
 }

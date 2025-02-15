@@ -1,5 +1,6 @@
 package Unit;
 
+import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.dtos.ParticipantDto;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.models.Participant;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.repositories.ParticipantRepository;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.services.ParticipantService;
@@ -129,5 +130,53 @@ class ParticipantUnitTest {
         assertNotEquals(participant, participantService.getById(id));
         assertEquals(newParticipant, participantService.getById(id));
 
+    }
+
+    // MODEL
+
+    @Test
+    void givenParticipant_whenInstancied_thenCorrectsFields() {
+        // Given
+        Long id = 3L;
+        String nom = "Machin";
+        String prenom = "Truc";
+
+        // When
+        Participant participant = new Participant(id, nom, prenom);
+
+        // Then
+        assertEquals(id, participant.getParticipantId());
+        assertEquals(nom, participant.getNom());
+        assertEquals(prenom, participant.getPrenom());
+    }
+
+
+    @Test
+    void givenParticipant_whenToString_thenResultCorrect() {
+        // Given
+        Long id = 3L;
+        String nom = "Machin";
+        String prenom = "Truc";
+        String attendu = "Participant{" + "participantId=" + id + ", nom='" + nom + '\'' + ", prenom='" + prenom + '\'' + '}';
+
+        // When
+        Participant participant = new Participant(id, nom, prenom);
+        String s = participant.toString();
+
+        // Then
+        assertEquals(attendu, s);
+    }
+
+    @Test
+    void givenParticipantDTO_whenToString_thenResultCorrect() {
+        // Given
+        String attendu = "ParticipantDto{" + "participantId=" + null + ", nom='" + null + '\'' + ", prenom='" + null + '\'' + '}';
+
+        // When
+        ParticipantDto participant = new ParticipantDto();
+        String s = participant.toString();
+
+        // Then
+        assertEquals(attendu, s);
     }
 }

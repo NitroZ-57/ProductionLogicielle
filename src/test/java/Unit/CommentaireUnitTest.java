@@ -120,11 +120,11 @@ class CommentaireUnitTest {
         Commentaire commentaire = mock(Commentaire.class);
 
         // When
-        when(commentaireRepository.findById(any(Long.class))).thenReturn(Optional.of(commentaire));
         Commentaire updated = commentaireService.update(1L, commentaire);
 
         // Then
         verify(commentaireRepository, times(1)).findById(any(Long.class));
+        verify(commentaireRepository, times(0)).save(any(Commentaire.class));
         assertNull(updated);
     }
 
@@ -140,10 +140,12 @@ class CommentaireUnitTest {
         // When
         Commentaire c2 = mock(Commentaire.class);
         when(commentaireRepository.findById(added.getCommentaireId())).thenReturn(Optional.of(added));
+        when(commentaireRepository.save(c2)).thenReturn(c2);
         Commentaire updated = commentaireService.update(added.getCommentaireId(), c2);
 
         // Then
         verify(commentaireRepository, times(2)).save(any(Commentaire.class));
+        verify(commentaireRepository, times(1)).findById(added.getCommentaireId());
         assertEquals(updated.getCommentaireId(), c2.getCommentaireId());
     }
 
