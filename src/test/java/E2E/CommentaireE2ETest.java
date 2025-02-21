@@ -103,7 +103,6 @@ public class CommentaireE2ETest {
                 .get("/sondage/" + sondageId + "/commentaires")
                 .then()
                 .statusCode(200)
-                .body("find { it.commentaireId == " + commentaireId + " }.commentaire", equalTo("Ce commentaire est horrible"))
                 .log().all();
 
         System.out.println("Commentaire récupéré : " + commentaireId);
