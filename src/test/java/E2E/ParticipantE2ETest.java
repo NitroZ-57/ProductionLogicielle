@@ -131,7 +131,7 @@ public class ParticipantE2ETest {
      * Test 6 - Vérifier qu'un participant supprimé ne peut plus être récupéré
      * GIVEN un participant supprimé
      * WHEN on tente de le récupérer
-     * THEN il retourne une erreur 404
+     * THEN il retourne une erreur 500
      */
     @Test
     @Order(6)
