@@ -30,20 +30,19 @@ class ParticipantIntegrationTest {
 
     @Test
     void testCreateParticipant() {
-        // Création d'un participant
+        // Given : Création d'un participant
         Participant participant = new Participant(null, "Alice", "Doe");
 
 
-        // Sauvegarde via le service
+        // When : Sauvegarde via le service
         Participant savedParticipant = participantService.create(participant);
 
-        // Vérification de la persistance via le repository
+        // Then : Vérification de la persistance via le repository
         Participant retrievedParticipant = participantRepository.findById(savedParticipant.getParticipantId()).orElse(null);
 
         assertThat(retrievedParticipant).isNotNull();
         assertThat(retrievedParticipant.getNom()).isEqualTo("Alice");
         assertThat(retrievedParticipant.getPrenom()).isEqualTo("Doe");
-
 
     }
     @Test
@@ -54,12 +53,15 @@ class ParticipantIntegrationTest {
 
     @Test
     void testUpdateParticipant() {
+        // Given : Création et sauvegarde d'un participant
         Participant participant = new Participant(null,"Jane", "Doe");
         Participant savedParticipant = participantService.create(participant);
 
+        // When : Mise à jour du nom du participant
         savedParticipant.setNom("Janet");
         Participant updatedParticipant = participantService.update(savedParticipant.getParticipantId(),savedParticipant);
 
+        // Then : Vérification que les modifications sont bien appliquées
         assertThat(updatedParticipant.getNom()).isEqualTo("Janet");
         assertThat(updatedParticipant.getPrenom()).isEqualTo("Doe");
     }
@@ -94,11 +96,14 @@ class ParticipantIntegrationTest {
 
     @Test
     void testDeleteParticipant() {
+        // Given
         Participant participant = new Participant(null,"John", "Doe");
         Participant savedParticipant = participantService.create(participant);
 
+        // When
         participantService.delete(savedParticipant.getParticipantId());
 
+        // Then
         Participant retrievedParticipant = participantRepository.findById(savedParticipant.getParticipantId()).orElse(null);
         assertThat(retrievedParticipant).isNull(); // Vérifie que le participant a été supprimé
     }
@@ -108,22 +113,28 @@ class ParticipantIntegrationTest {
     }
     @Test
     void testGetParticipantById() {
+        // Given
         Participant participant = new Participant(null,"Mike", "Jordan");
         Participant savedParticipant = participantService.create(participant);
 
+        // When
         Participant retrievedParticipant = participantRepository.findById(savedParticipant.getParticipantId()).orElse(null);
 
+        //THen
         assertThat(retrievedParticipant).isNotNull();
         assertThat(retrievedParticipant.getParticipantId()).isEqualTo(savedParticipant.getParticipantId());
     }
 
     @Test
     void testGetAllParticipants() {
+        // Given
         participantService.create(new Participant(null,"Alice", "Smith"));
         participantService.create(new Participant(null, "Bob", "Brown"));
 
+        // When
         List<Participant> participants = participantService.getAll();
 
+        // Then
         assertThat(participants).isNotEmpty();
         assertThat(participants.size()).isGreaterThanOrEqualTo(2);
     }
@@ -132,8 +143,10 @@ class ParticipantIntegrationTest {
     //Ce test vérifie qu'une tentative de récupération d'un participant inexistant retourne bien null
     @Test
     void testGetParticipantByNonExistentId() {
+        // When
         Participant retrievedParticipant = participantRepository.findById(999L).orElse(null);
 
+        // Then
         assertThat(retrievedParticipant).isNull();
     }
 

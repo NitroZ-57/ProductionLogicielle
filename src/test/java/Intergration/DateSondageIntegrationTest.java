@@ -62,27 +62,34 @@ public class DateSondageIntegrationTest {
 
     @Test
     void testCreateDateSondage() {
+        // Given
         DateSondage dateSondage = new DateSondage();
         dateSondage.setDate(new Date());
 
+        // WHen
         DateSondage createdDateSondage = dateSondageService.create(sondage.getSondageId(), dateSondage);
+        // Then
         assertNotNull(createdDateSondage.getDateSondageId());
         assertEquals(sondage.getSondageId(), createdDateSondage.getSondage().getSondageId());
     }
     @Test
     void testGetById() {
+        // Given
         DateSondage dateSondage = new DateSondage();
         dateSondage.setDate(new Date());
 
         DateSondage savedDateSondage = dateSondageService.create(sondage.getSondageId(), dateSondage);
 
+        // When
         DateSondage foundDateSondage = dateSondageService.getById(savedDateSondage.getDateSondageId());
+        // Then
         assertNotNull(foundDateSondage);
         assertEquals(savedDateSondage.getDateSondageId(), foundDateSondage.getDateSondageId());
     }
 
     @Test
     void testGetBySondageId() {
+        // Given
         DateSondage dateSondage1 = new DateSondage();
         dateSondage1.setDate(new Date(System.currentTimeMillis()));
 
@@ -91,21 +98,25 @@ public class DateSondageIntegrationTest {
 
         dateSondageService.create(sondage.getSondageId(), dateSondage1);
         dateSondageService.create(sondage.getSondageId(), dateSondage2);
-
+        // When
         List<DateSondage> dateSondages = dateSondageService.getBySondageId(sondage.getSondageId());
+        // Then
         assertEquals(2, dateSondages.size());
     }
 
     @Test
     void testDeleteDateSondage() {
+        // Given
         DateSondage dateSondage = new DateSondage();
         dateSondage.setDate(new Date());
 
         DateSondage savedDateSondage = dateSondageService.create(sondage.getSondageId(), dateSondage);
 
+        // When
         int result = dateSondageService.delete(savedDateSondage.getDateSondageId());
-        assertEquals(1, result);
 
+        // Then
+        assertEquals(1, result);
         assertFalse(dateSondageRepository.findById(savedDateSondage.getDateSondageId()).isPresent());
     }
 

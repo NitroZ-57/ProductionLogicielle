@@ -36,7 +36,7 @@ class CommentaireIntegrationTest {
 
     @Test
     void testAddCommentaire() throws Exception {
-        // Création d'un sondage et d'un participant pour la simulation
+        // Given : Création d'un sondage et d'un participant
         Sondage sondage = new Sondage();
         sondage.setNom("Sondage de test");
         sondageRepository.save(sondage);
@@ -49,23 +49,23 @@ class CommentaireIntegrationTest {
         commentaire.setSondage(sondage);
         commentaire.setParticipant(participant);
 
-        // Appeler la méthode du service pour ajouter le commentaire
+        // When : Appeler la méthode du service pour ajouter le commentaire
         Commentaire savedCommentaire = commentaireService.addCommantaire(sondage.getSondageId(), participant.getParticipantId(), commentaire);
 
-        // Vérifier que le commentaire est bien ajouté en base
+        // Then : Vérifier que le commentaire est bien ajouté en base
         assertNotNull(savedCommentaire);
         assertEquals("Test commentaire", savedCommentaire.getCommentaire());
         assertEquals(sondage.getSondageId(), savedCommentaire.getSondage().getSondageId());
         assertEquals(participant.getParticipantId(), savedCommentaire.getParticipant().getParticipantId());
 
-        // Optionnel : Vérifier que le commentaire a bien été enregistré dans la base de données
+        // Vérifier que le commentaire a bien été enregistré dans la base de données
         Commentaire commentaireInDb = commentaireRepository.findById(savedCommentaire.getCommentaireId()).orElse(null);
         assertNotNull(commentaireInDb);
     }
 
     @Test
     void testUpdateCommentaire() throws Exception {
-        // Création d'un sondage et d'un participant pour la simulation
+        // Given : Création d'un sondage et d'un participant
         Sondage sondage = new Sondage();
         sondage.setNom("Sondage de test");
         sondageRepository.save(sondage);
@@ -80,11 +80,11 @@ class CommentaireIntegrationTest {
         commentaire.setParticipant(participant);
         commentaireRepository.save(commentaire);
 
-        // Mise à jour du commentaire
+        // When : Mise à jour du commentaire
         commentaire.setCommentaire("Nouveau commentaire");
         Commentaire updatedCommentaire = commentaireService.update(commentaire.getCommentaireId(), commentaire);
 
-        // Vérifier que le commentaire a bien été mis à jour
+        // Then : Vérifier que le commentaire a bien été mis à jour
         assertNotNull(updatedCommentaire);
         assertEquals("Nouveau commentaire", updatedCommentaire.getCommentaire());
 
@@ -96,7 +96,7 @@ class CommentaireIntegrationTest {
 
     @Test
     void testDeleteCommentaire() throws Exception {
-        // Création d'un sondage et d'un participant pour la simulation
+        // Given : Création d'un sondage et d'un participant
         Sondage sondage = new Sondage();
         sondage.setNom("Sondage de test");
         sondageRepository.save(sondage);
@@ -104,24 +104,24 @@ class CommentaireIntegrationTest {
         Participant participant = new Participant(null,"alice","bob");
         participantRepository.save(participant);
 
-        // Création du commentaire
+        // Given : Création du commentaire
         Commentaire commentaire = new Commentaire();
         commentaire.setCommentaire("Commentaire à supprimer");
         commentaire.setSondage(sondage);
         commentaire.setParticipant(participant);
         commentaireRepository.save(commentaire);
 
-        // Suppression du commentaire
+        // When : Suppression du commentaire
         commentaireService.delete(commentaire.getCommentaireId());
 
-        // Vérifier que le commentaire a bien été supprimé
+        // Then : Vérifier que le commentaire a bien été supprimé
         Commentaire commentaireInDb = commentaireRepository.findById(commentaire.getCommentaireId()).orElse(null);
         assertNull(commentaireInDb);
     }
 
     @Test
     void testGetBySondageId() throws Exception {
-        // Création d'un sondage et d'un participant pour la simulation
+        // Création d'un sondage et d'un participant
         Participant participant = new Participant(null,"alice","bob");
         participantRepository.save(participant);
 

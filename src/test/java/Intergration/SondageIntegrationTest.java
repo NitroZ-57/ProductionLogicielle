@@ -37,14 +37,17 @@ public class SondageIntegrationTest {
 
     @Test
     void testCreateSondage() {
+        // Given
         Participant participant = new Participant(null, "Alice", "BOB");
         participantRepository.save(participant);
 
         Sondage sondage = new Sondage();
         sondage.setNom("Test Sondage");
 
+        //when
         Sondage createdSondage = sondageService.create(participant.getParticipantId(), sondage);
 
+        // Then
         assertNotNull(createdSondage);
         assertEquals("Test Sondage", createdSondage.getNom());
         assertNotNull(createdSondage.getCreateBy());
@@ -57,6 +60,7 @@ public class SondageIntegrationTest {
     }
     @Test
     void testUpdateSondage() {
+        // Given
         Participant participant = new Participant(null, "Alice", "BOB");
         participantRepository.save(participant);
 
@@ -64,16 +68,18 @@ public class SondageIntegrationTest {
         sondage.setNom("Original Sondage");
         Sondage createdSondage = sondageService.create(participant.getParticipantId(), sondage);
 
-        // Mise à jour du sondage
+        // When : Mise à jour du sondage
         createdSondage.setNom("Updated Sondage");
         Sondage updatedSondage = sondageService.update(createdSondage.getSondageId(), createdSondage);
 
+        // Then
         assertNotNull(updatedSondage);
         assertEquals("Updated Sondage", updatedSondage.getNom());
     }
 
     @Test
     void testDeleteSondage() {
+        // Given
         Participant participant = new Participant(null, "Alice", "BOB");
 
         participantRepository.save(participant);
@@ -82,11 +88,11 @@ public class SondageIntegrationTest {
         sondage.setNom("Delete Sondage");
         Sondage createdSondage = sondageService.create(participant.getParticipantId(), sondage);
 
-        // Suppression du sondage
+        // When : Suppression du sondage
         int result = sondageService.delete(createdSondage.getSondageId());
         assertEquals(1, result);
 
-        // Vérification de la suppression
+        // Then : Vérification de la suppression
         assertThrows(JpaObjectRetrievalFailureException.class, () -> {
             sondageService.getById(createdSondage.getSondageId());
         });
@@ -94,6 +100,7 @@ public class SondageIntegrationTest {
 
     @Test
     void testGetAllSondages() {
+        // Given
         Participant participant = new Participant(null, "Alice", "BOB");
         participantRepository.save(participant);
 
@@ -106,8 +113,10 @@ public class SondageIntegrationTest {
         sondageService.create(participant.getParticipantId(), sondage1);
         sondageService.create(participant.getParticipantId(), sondage2);
 
+        // When
         List<Sondage> sondages = sondageService.getAll();
 
+        // Then
         assertTrue(sondages.size() >= 2);
     }
 

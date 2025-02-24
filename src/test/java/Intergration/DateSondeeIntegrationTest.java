@@ -63,12 +63,14 @@ public class DateSondeeIntegrationTest {
 
     @Test
     void testCreateDateSondeeSuccessfully() {
+        // Given
         sondage.getSondage().setCloture(false);
         DateSondee dateSondee = new DateSondee();
         dateSondee.setChoix(Choix.DISPONIBLE);
-
+        // When
         DateSondee createdDateSondee = dateSondeeService.create(sondage.getDateSondageId(), participant.getParticipantId(), dateSondee);
 
+        // Then
         assertNotNull(createdDateSondee, "DateSondee should be created successfully");
         assertEquals(Choix.DISPONIBLE, createdDateSondee.getChoix());
         assertEquals(participant.getParticipantId(), createdDateSondee.getParticipant().getParticipantId());
@@ -77,24 +79,27 @@ public class DateSondeeIntegrationTest {
 
     @Test
     void testCreateDateSondeeWithClosedSondage() {
+        // Given
         sondage.getSondage().setCloture(true);
         DateSondee dateSondee = new DateSondee();
         dateSondee.setChoix(Choix.INDISPONIBLE);
 
+        //When
         DateSondee result = dateSondeeService.create(sondage.getDateSondageId(), participant.getParticipantId(), dateSondee);
-
+        // Then
         assertNull(result, "DateSondee should not be created when the sondage is closed");
     }
 
     @Test
     void testRepositorySaveAndFind() {
+        // Given
         DateSondee dateSondee = new DateSondee();
         dateSondee.setChoix(Choix.PEUTETRE);
         dateSondee.setParticipant(participant);
         dateSondee.setDateSondage(sondage);
-
+        // When
         DateSondee savedDateSondee = dateSondeeRepository.save(dateSondee);
-
+        // Then
         assertNotNull(savedDateSondee.getDateSondeeId(), "Saved DateSondee should have an ID");
         assertEquals(Choix.PEUTETRE, savedDateSondee.getChoix());
     }
