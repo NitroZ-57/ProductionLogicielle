@@ -63,7 +63,8 @@ public class ParticipantE2ETest {
                 .then()
                 .statusCode(200)
                 .body("nom", equalTo("Doe"))
-                .body("prenom", equalTo("John"));
+                .body("prenom", equalTo("John"))
+                .log().all();
 
         System.out.println("Participant récupéré : " + participantId);
     }
@@ -85,7 +86,8 @@ public class ParticipantE2ETest {
                 .then()
                 .statusCode(200)
                 .body("nom", equalTo("Doe"))
-                .body("prenom", equalTo("Jane"));
+                .body("prenom", equalTo("Jane"))
+                .log().all();
 
         System.out.println("Participant mis à jour : " + participantId);
     }
@@ -104,7 +106,8 @@ public class ParticipantE2ETest {
                 .get("/participant/")
                 .then()
                 .statusCode(200)
-                .body("size()", greaterThan(0));
+                .body("size()", greaterThan(0))
+                .log().all();
 
         System.out.println("Liste des participants récupérée");
     }
