@@ -1,77 +1,52 @@
 package fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.dtos;
 
 import java.util.Date;
-import java.util.Objects;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.NoArgsConstructor;
+import lombok.EqualsAndHashCode;
 
+/**
+ * Classe DTO (Data Transfer Object) pour représenter un sondage.
+ * Cette classe est utilisée pour transférer les données liées à un sondage
+ * entre les différentes couches de l'application.
+ */
+@Getter // Génère automatiquement les getters pour tous les champs
+@Setter // Génère automatiquement les setters pour tous les champs
+@NoArgsConstructor // Génère un constructeur sans arguments
+@EqualsAndHashCode // Génère automatiquement les méthodes equals() et hashCode()
 public class SondageDto {
 
+    /**
+     * Identifiant unique du sondage.
+     */
     private Long sondageId;
+
+    /**
+     * Nom du sondage.
+     */
     private String nom;
+
+    /**
+     * Description détaillée du sondage.
+     */
     private String description;
+
+    /**
+     * Date de fin du sondage (deadline après laquelle il n'est plus possible de répondre).
+     */
     private Date fin;
+
+    /**
+     * Indique si le sondage est clôturé.
+     * - true : le sondage est clôturé (plus de réponses possibles).
+     * - false : le sondage est encore actif.
+     */
     private Boolean cloture;
+
+    /**
+     * Identifiant de l'utilisateur ayant créé le sondage.
+     */
     private Long createBy;
 
-    public SondageDto() {}
-
-    public Long getSondageId() {
-        return sondageId;
-    }
-
-    public void setSondageId(Long sondageId) {
-        this.sondageId = sondageId;
-    }
-
-    public String getNom() {
-        return nom;
-    }
-
-    public void setNom(String nom) {
-        this.nom = nom;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public Date getFin() {
-        return fin;
-    }
-
-    public void setFin(Date fin) {
-        this.fin = fin;
-    }
-
-    public Boolean getCloture() {
-        return cloture;
-    }
-
-    public void setCloture(Boolean cloture) {
-        this.cloture = cloture;
-    }
-
-    public Long getCreateBy() {
-        return createBy;
-    }
-
-    public void setCreateBy(Long createBy) {
-        this.createBy = createBy;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof SondageDto)) return false;
-        SondageDto that = (SondageDto) o;
-        return Objects.equals(getSondageId(), that.getSondageId()) && Objects.equals(getNom(), that.getNom()) && Objects.equals(getDescription(), that.getDescription()) && Objects.equals(getFin(), that.getFin()) && Objects.equals(getCloture(), that.getCloture()) && Objects.equals(getCreateBy(), that.getCreateBy());
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(getSondageId(), getNom(), getDescription(), getFin(), getCloture(), getCreateBy());
-    }
 }

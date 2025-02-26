@@ -16,6 +16,7 @@ import static org.hamcrest.Matchers.*;
 @TestMethodOrder(OrderAnnotation.class) //permet de faire un ordre de passage précis des tests
 public class ParticipantE2ETest {
     private static Integer participantId;
+
     @BeforeAll
     public static void setup() {
         // Configurez l'URL de base pour l'application que vous testez
@@ -144,7 +145,7 @@ public class ParticipantE2ETest {
                 .get("/participant/" + participantId)
                 .then()
                 .statusCode(500);
-
         System.out.println("Vérification : le participant supprimé n'existe plus.");
     }
+
 }

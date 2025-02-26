@@ -1,49 +1,34 @@
 package fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.dtos;
 
-import java.util.Objects;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.NoArgsConstructor;
+import lombok.EqualsAndHashCode;
 
+/**
+ * Classe DTO (Data Transfer Object) pour représenter un commentaire.
+ * Cette classe est utilisée pour transférer les données entre les couches
+ * de l'application sans exposer directement le modèle de données.
+ */
+@Getter // Génère automatiquement les getters pour tous les champs
+@Setter // Génère automatiquement les setters pour tous les champs
+@NoArgsConstructor // Génère un constructeur sans arguments
+@EqualsAndHashCode // Génère automatiquement les méthodes equals() et hashCode()
 public class CommentaireDto {
 
+    /**
+     * Identifiant unique du commentaire.
+     */
     private Long commentaireId;
+
+    /**
+     * Contenu du commentaire.
+     */
     private String commentaire;
+
+    /**
+     * Identifiant du participant qui a créé le commentaire.
+     */
     private Long participant;
 
-    public CommentaireDto() {}
-
-    public Long getCommentaireId() {
-        return commentaireId;
-    }
-
-    public void setCommentaireId(Long commentaireId) {
-        this.commentaireId = commentaireId;
-    }
-
-    public String getCommentaire() {
-        return commentaire;
-    }
-
-    public void setCommentaire(String commentaire) {
-        this.commentaire = commentaire;
-    }
-
-    public Long getParticipant() {
-        return participant;
-    }
-
-    public void setParticipant(Long participant) {
-        this.participant = participant;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof CommentaireDto)) return false;
-        CommentaireDto that = (CommentaireDto) o;
-        return Objects.equals(getCommentaireId(), that.getCommentaireId()) && Objects.equals(getCommentaire(), that.getCommentaire()) && Objects.equals(getParticipant(), that.getParticipant());
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(getCommentaireId(), getCommentaire(), getParticipant());
-    }
 }
