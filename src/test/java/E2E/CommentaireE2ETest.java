@@ -108,30 +108,7 @@ public class CommentaireE2ETest {
     }
 
     /**
-     * Test 5 : Mettre à jour un commentaire
-     * GIVEN un commentaire existant
-     * WHEN on change sa description
-     * THEN les chargements sont sauvegardé
-     */
-    /*@Test
-    @Order(5)
-    void givenACommentaire_whenUpdate_thenCommentaireIsUpdated() {
-        given()
-                .contentType(ContentType.JSON)
-                .body("{\"commentaire\": \"Ce commentaire est wow\", \"participant\": \"" + participantId + "\", \"sondage\": \"" +sondageId+ "\" }")
-                .log().all()
-                .when()
-                .put("/commentaire/" + commentaireId)
-                .then()
-                .log().all()
-                .statusCode(200);
-
-
-        System.out.println("Commentaire mis à jour : " + commentaireId);
-    }*/
-
-    /**
-     * Test 6 : Supprimer le commentaire
+     * Test 5 : Supprimer le commentaire
      * GIVEN un commentaire existant
      * WHEN on le supprime
      * THEN il a disparu
@@ -149,7 +126,7 @@ public class CommentaireE2ETest {
     }
 
     /**
-     * Test 7 : Vérifier qu'un commentaire supprimé ne peut plus être récupéré
+     * Test 6 : Vérifier qu'un commentaire supprimé ne peut plus être récupéré
      * GIVEN un commentaire supprimé
      * WHEN on tente de le récupérer
      * THEN il retourne une erreur 404
@@ -167,7 +144,7 @@ public class CommentaireE2ETest {
     }
 
     /**
-     * Test 8 : Supprimer le sondage
+     * Test 7 : Supprimer le sondage
      * GIVEN un sondage existant
      * WHEN on le supprime
      * THEN il a disparu
@@ -185,7 +162,7 @@ public class CommentaireE2ETest {
     }
 
     /**
-     * Test 9 : Vérifier qu'un sondage supprimé ne peut plus être récupéré
+     * Test 8 : Vérifier qu'un sondage supprimé ne peut plus être récupéré
      * GIVEN un sondage supprimé
      * WHEN on tente de le récupérer
      * THEN il retourne une erreur 500
@@ -203,7 +180,7 @@ public class CommentaireE2ETest {
     }
 
     /**
-     * Test 10 - Supprimer un participant
+     * Test 9 - Supprimer un participant
      * GIVEN un participant existant
      * WHEN on le supprime
      * THEN il n'est plus disponible dans la base de données

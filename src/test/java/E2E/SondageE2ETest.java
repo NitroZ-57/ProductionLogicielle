@@ -115,37 +115,6 @@ public class SondageE2ETest {
     }
 
     /**
-     * Test 5 - Mettre à jour un sondage
-     * GIVEN le premier sondage
-     * WHEN on change son statut de cloture
-     * THEN les changements sont sauvegarder
-     */
-    /*@Test
-    @Order(5)
-    void givenASondage_whenUpdate_thenSondageIsUpdated() {
-        String updatedSondageJson = "{"
-                + "\"sondageId\": " + sondageId + ","
-                + "\"cloture\": true,"
-                + "\"description\": \"Sondage test\","
-                + "\"fin\": \"2025-02-15T23:59:00\","
-                + "\"nom\": \"Sondage Test\","
-                + "\"createBy\": " + participantId
-                + "}";
-
-        given()
-                .contentType(ContentType.JSON)
-                .body(updatedSondageJson)
-                .log().all()
-                .when()
-                .put("/sondage/" + sondageId)
-                .then()
-                .log().all()
-                .statusCode(200);
-
-        System.out.println("Sondage mis à jour : " + sondageId);
-    }*/
-
-    /**
      *  Test 5 - Supprimer les sondages + participant
      *  GIVEN un sondage + un participant existant
      *  WHEN on les supprime

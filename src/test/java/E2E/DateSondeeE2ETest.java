@@ -153,24 +153,6 @@ public class DateSondeeE2ETest {
     }
 
     /**
-     * Test 4 - Voir si on peut voir les choix "disponible" en premier lors d'un sondage
-     * GIVEN tout les sondees d'un sondage
-     * WHEN on le recupere et on le trie
-     * THEN on le visualise
-     */
-    /*@Test
-    @Order(4)
-    void givenAllSondeeOfSondage_whenGet_thenReturnedBest(){
-        given()
-                .when()
-                .get("/sondage/"+sondageId+"/best")
-                .then()
-                .statusCode(200)
-                .log().all();
-        System.out.println("Liste des sondee du sondage : "+sondageId+" trié par ceux qui sont disponible");
-    }*/
-
-    /**
      * Test 4 - Suppression de la date de sondage qui regroupe toutes les sondees
      * GIVEN la date du sondage excistant
      * WHEN on le supprime
