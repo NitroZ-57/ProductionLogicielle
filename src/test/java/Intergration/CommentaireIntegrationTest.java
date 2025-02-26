@@ -35,7 +35,7 @@ class CommentaireIntegrationTest {
     private ParticipantRepository participantRepository;
 
     @Test
-    void testAddCommentaire() throws Exception {
+    void testAddCommentaire() {
         // Given : Création d'un sondage et d'un participant
         Sondage sondage = new Sondage();
         sondage.setNom("Sondage de test");
@@ -64,7 +64,7 @@ class CommentaireIntegrationTest {
     }
 
     @Test
-    void testUpdateCommentaire() throws Exception {
+    void testUpdateCommentaire() {
         // Given : Création d'un sondage et d'un participant
         Sondage sondage = new Sondage();
         sondage.setNom("Sondage de test");
@@ -95,7 +95,7 @@ class CommentaireIntegrationTest {
     }
 
     @Test
-    void testDeleteCommentaire() throws Exception {
+    void testDeleteCommentaire() {
         // Given : Création d'un sondage et d'un participant
         Sondage sondage = new Sondage();
         sondage.setNom("Sondage de test");
@@ -120,7 +120,7 @@ class CommentaireIntegrationTest {
     }
 
     @Test
-    void testGetBySondageId() throws Exception {
+    void testGetBySondageId() {
         // Création d'un sondage et d'un participant
         Participant participant = new Participant(null,"alice","bob");
         participantRepository.save(participant);

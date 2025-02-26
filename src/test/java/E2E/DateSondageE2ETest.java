@@ -8,13 +8,13 @@ import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.*;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class) //permet de faire un ordre de passage précis des tests
-public class DateSondageE2ETest {
+class DateSondageE2ETest {
     private static Integer sondageId;
     private static Integer participantId;
     private static Integer dateSondageId;
 
     @BeforeAll
-    public static void setup() {
+    static void setup() {
         // Configurez l'URL de base pour l'application que vous testez
         RestAssured.baseURI = "https://productionlogicielle.onrender.com/api"; // URL de votre application
     }

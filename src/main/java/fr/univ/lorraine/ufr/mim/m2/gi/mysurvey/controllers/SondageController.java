@@ -49,7 +49,6 @@ public class SondageController {
      */
     @GetMapping(value = "/{id}")
     @ResponseStatus(HttpStatus.OK)
-    @ResponseBody
     public SondageDto get(@PathVariable("id") Long id) {
         var model = service.getById(id); // Récupération du sondage via le service
         return mapper.map(model, SondageDto.class); // Conversion de l'entité en DTO
@@ -60,7 +59,6 @@ public class SondageController {
      */
     @GetMapping(value = "/{id}/best")
     @ResponseStatus(HttpStatus.OK)
-    @ResponseBody
     public List<Date> getBest(@PathVariable("id") Long id) {
         return request.bestDate(id); // Appel du service pour les meilleures dates
     }
@@ -70,7 +68,6 @@ public class SondageController {
      */
     @GetMapping(value = "/{id}/maybe")
     @ResponseStatus(HttpStatus.OK)
-    @ResponseBody
     public List<Date> getMaybeBest(@PathVariable("id") Long id) {
         return request.maybeBestDate(id); // Appel du service pour des dates alternatives
     }
@@ -80,7 +77,6 @@ public class SondageController {
      */
     @GetMapping(value = "/")
     @ResponseStatus(HttpStatus.OK)
-    @ResponseBody
     public List<SondageDto> get() {
         var models = service.getAll(); // Récupération de tous les sondages via le service
         return models.stream()
@@ -93,7 +89,6 @@ public class SondageController {
      */
     @GetMapping(value = "/{id}/commentaires")
     @ResponseStatus(HttpStatus.OK)
-    @ResponseBody
     public List<CommentaireDto> getCommentaires(@PathVariable("id") Long id) {
         var models = scommentaire.getBySondageId(id); // Récupération des commentaires
         return models.stream()
@@ -106,7 +101,6 @@ public class SondageController {
      */
     @GetMapping(value = "/{id}/dates")
     @ResponseStatus(HttpStatus.OK)
-    @ResponseBody
     public List<DateSondageDto> getDates(@PathVariable("id") Long id) {
         var models = sdate.getBySondageId(id); // Récupération des dates
         return models.stream()
@@ -119,7 +113,6 @@ public class SondageController {
      */
     @PostMapping(value = "/")
     @ResponseStatus(HttpStatus.CREATED)
-    @ResponseBody
     public SondageDto create(@RequestBody SondageDto sondageDto) {
         var model = mapper.map(sondageDto, Sondage.class); // Conversion du DTO en entité
         var result = service.create(sondageDto.getCreateBy(), model); // Création du sondage via le service
@@ -131,7 +124,6 @@ public class SondageController {
      */
     @PostMapping(value = "/{id}/commentaires")
     @ResponseStatus(HttpStatus.CREATED)
-    @ResponseBody
     public CommentaireDto createCommantaire(@PathVariable("id") Long id, @RequestBody CommentaireDto commantaireDto) {
         var model = mapper.map(commantaireDto, Commentaire.class); // Conversion du DTO en entité
         var result = scommentaire.addCommantaire(id, commantaireDto.getParticipant(), model); // Ajout du commentaire
@@ -143,7 +135,6 @@ public class SondageController {
      */
     @PostMapping(value = "/{id}/dates")
     @ResponseStatus(HttpStatus.CREATED)
-    @ResponseBody
     public DateSondageDto createDate(@PathVariable("id") Long id, @RequestBody DateSondageDto dto) {
         var model = mapper.map(dto, DateSondage.class); // Conversion du DTO en entité
         var result = sdate.create(id, model); // Ajout de la date au sondage

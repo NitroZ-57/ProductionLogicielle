@@ -77,22 +77,6 @@ class ParticipantIntegrationTest {
         assertThat(updatedParticipant).isNull();
     }
 
-    /*
-    @Test
-    void testUpdateParticipantWithInvalidData() {
-        // Créer un participant initial
-        Participant participant = new Participant(null, "Mike", "Jordan");
-        Participant savedParticipant = participantService.create(participant);  // Crée et sauvegarde le participant
-
-        // Essayer de mettre à jour avec des données invalides (par exemple, un nom null)
-        savedParticipant.setNom(null);
-
-        // Vérifier si une exception de violation d'intégrité des données se produit lors de la mise à jour
-        assertThrows(DataIntegrityViolationException.class, () -> {
-            participantService.update(savedParticipant.getParticipantId(), savedParticipant);  // Mise à jour du participant
-        });
-    }
-*/
 
     @Test
     void testDeleteParticipant() {
@@ -136,7 +120,7 @@ class ParticipantIntegrationTest {
 
         // Then
         assertThat(participants).isNotEmpty();
-        assertThat(participants.size()).isGreaterThanOrEqualTo(2);
+        assertThat(participants).hasSizeGreaterThanOrEqualTo(2);
     }
 
 

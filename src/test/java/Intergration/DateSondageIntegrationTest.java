@@ -8,17 +8,14 @@ import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.repositories.DateSondageRepositor
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.repositories.ParticipantRepository;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.repositories.SondageRepository;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.services.DateSondageService;
-import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.services.ParticipantService;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.services.SondageService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.test.annotation.DirtiesContext;
 
 
-import static org.assertj.core.api.Assertions.assertThat;
 
 import javax.transaction.Transactional;
 
@@ -30,7 +27,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest(classes = MySurveyApplication.class)
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 @Transactional
-public class DateSondageIntegrationTest {
+class DateSondageIntegrationTest {
     @Autowired
     private DateSondageService dateSondageService;
 

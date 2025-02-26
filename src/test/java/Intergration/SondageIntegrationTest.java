@@ -5,17 +5,13 @@ import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.models.Participant;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.models.Sondage;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.repositories.ParticipantRepository;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.repositories.SondageRepository;
-import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.services.ParticipantService;
 import fr.univ.lorraine.ufr.mim.m2.gi.mysurvey.services.SondageService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.orm.jpa.JpaObjectRetrievalFailureException;
 import org.springframework.test.annotation.DirtiesContext;
-import static org.assertj.core.api.Assertions.assertThat;
 
-import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
 
 import java.util.List;
@@ -25,7 +21,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest(classes = MySurveyApplication.class)
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 @Transactional
-public class SondageIntegrationTest {
+class SondageIntegrationTest {
     @Autowired
     private SondageService sondageService;
 
@@ -93,9 +89,9 @@ public class SondageIntegrationTest {
         assertEquals(1, result);
 
         // Then : Vérification de la suppression
-        assertThrows(JpaObjectRetrievalFailureException.class, () -> {
-            sondageService.getById(createdSondage.getSondageId());
-        });
+        assertThrows(JpaObjectRetrievalFailureException.class,
+                () -> sondageService.getById(createdSondage.getSondageId()));
+
     }
 
     @Test

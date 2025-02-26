@@ -38,7 +38,6 @@ public class CommentaireController {
      */
     @PutMapping(value = "/{id}") // Requête PUT pour mettre à jour un commentaire
     @ResponseStatus(HttpStatus.OK) // Code HTTP 200 en cas de succès
-    @ResponseBody
     public CommentaireDto update(@PathVariable("id") Long id, @RequestBody CommentaireDto commentaireDto) {
         // Conversion du DTO en entité Commentaire
         var model = mapper.map(commentaireDto, Commentaire.class);

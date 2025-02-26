@@ -2,7 +2,6 @@ package E2E;
 
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
-import io.restassured.response.Response;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
@@ -10,15 +9,14 @@ import org.junit.jupiter.api.TestMethodOrder;
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 
 import static io.restassured.RestAssured.*;
-import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
 @TestMethodOrder(OrderAnnotation.class) //permet de faire un ordre de passage précis des tests
-public class ParticipantE2ETest {
+class ParticipantE2ETest {
     private static Integer participantId;
 
     @BeforeAll
-    public static void setup() {
+    static void setup() {
         // Configurez l'URL de base pour l'application que vous testez
         RestAssured.baseURI = "https://productionlogicielle.onrender.com/api"; // URL de votre application
     }

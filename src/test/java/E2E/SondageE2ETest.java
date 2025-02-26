@@ -7,13 +7,13 @@ import org.junit.jupiter.api.*;
 import static io.restassured.RestAssured.given;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class) //permet de faire un ordre de passage précis des tests
-public class SondageE2ETest {
+class SondageE2ETest {
     private static Integer sondageId;
     private static Integer sondageId2;
     private static Integer participantId;
 
     @BeforeAll
-    public static void setup() {
+    static void setup() {
         // Configurez l'URL de base pour l'application que vous testez
         RestAssured.baseURI = "https://productionlogicielle.onrender.com/api"; // URL de votre application
     }

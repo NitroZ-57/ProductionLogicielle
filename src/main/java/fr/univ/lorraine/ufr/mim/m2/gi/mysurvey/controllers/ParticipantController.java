@@ -40,7 +40,6 @@ public class ParticipantController {
      */
     @GetMapping(value = "/{id}") // Requête GET pour obtenir un participant par ID
     @ResponseStatus(HttpStatus.OK) // Retourne un statut 200 en cas de succès
-    @ResponseBody
     public ParticipantDto get(@PathVariable("id") Long id) {
         // Recherche le participant par son ID
         var model = service.getById(id);
@@ -55,7 +54,6 @@ public class ParticipantController {
      */
     @GetMapping(value = "/") // Requête GET pour obtenir tous les participants
     @ResponseStatus(HttpStatus.OK) // Retourne un statut 200 en cas de succès
-    @ResponseBody
     public List<ParticipantDto> get() {
         // Récupère tous les participants via le service
         var models = service.getAll();
@@ -71,7 +69,6 @@ public class ParticipantController {
      */
     @PostMapping(value = "/") // Requête POST pour créer un participant
     @ResponseStatus(HttpStatus.CREATED) // Retourne un statut 201 en cas de création réussie
-    @ResponseBody
     public ParticipantDto create(@RequestBody ParticipantDto participantDto) {
         // Convertit le DTO en entité Participant
         var model = mapper.map(participantDto, Participant.class);

@@ -54,7 +54,6 @@ public class DateSondageController {
      */
     @PostMapping(value = "/{id}/participer") // Requête POST pour participer à une date sondée
     @ResponseStatus(HttpStatus.CREATED) // Code HTTP 201 en cas de création réussie
-    @ResponseBody
     public DateSondeeDto createParticipation(@PathVariable("id") Long id, @RequestBody DateSondeeDto dto) {
         // Conversion du DTO en entité DateSondee
         var model = mapper.map(dto, DateSondee.class);
